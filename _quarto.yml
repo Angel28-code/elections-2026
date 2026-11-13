@@ -1,0 +1,27 @@
+project:
+  type: website
+
+website:
+  title: "Elections"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: florida.qmd
+        text: Florida
+      - href: alabama.qmd
+        text: Alabama
+      - href: pennsylvania.qmd
+        text: Pennsylvania
+      - about.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+

@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "florida.html",
+    "href": "florida.html",
+    "title": "Florida Elections",
+    "section": "",
+    "text": "This page examines results from the 2026 Florida primary election using precinct-level data from the Florida Department of State Division of Elections.\n\n\n\n\n\n\n\n\n\nThe chart above displays the total statewide votes cast in the 2026 Florida U.S. Senate primary election by candidate and political party."
+  },
+  {
+    "objectID": "pennsylvania.html",
+    "href": "pennsylvania.html",
+    "title": "Pennsylvania Elections",
+    "section": "",
+    "text": "This page examines results from the 2026 Pennsylvania primary election using precinct-level data from the Pennsylvania Department of State.\n\n\n\n\n\n\n\n\n\nThe chart above displays statewide vote totals in the 2026 Pennsylvania gubernatorial primary election for each party’s nominee."
+  },
+  {
+    "objectID": "alabama.html",
+    "href": "alabama.html",
+    "title": "Alabama Elections",
+    "section": "",
+    "text": "This page examines results from the 2026 Alabama primary election using precinct-level data from the Alabama Secretary of State.\n\n\n\n\n\n\n\n\n\nThe chart above displays statewide vote totals for candidates in the 2026 Alabama U.S. Senate primary election across both major political parties."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Elections",
+    "section": "",
+    "text": "This project examines results from the November 3, 2026 North Carolina general election using official precinct-level data provided by the North Carolina State Board of Elections.\n\n\n\n\n\n\n\n\n\nThe chart above displays the total statewide votes cast in the 2026 U.S. Senate race, comparing results across all participating candidates and parties. In the interactive map below, hover over any precinct to see the percentage to which each party won."
+  }
+]

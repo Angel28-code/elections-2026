@@ -1,0 +1,71 @@
+---
+title: "Alabama Elections"
+---
+
+This page examines results from the 2026 Alabama primary election using precinct-level data from the Alabama Secretary of State.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(maps)
+
+# Read the Alabama 2026 Senate results
+results <- read_csv("alabama_senate_2026.csv", show_col_types = FALSE)
+
+# Plot total votes for the US Senate race
+results |>
+  group_by(candidate, party) |>
+  summarize(total_votes = sum(votes, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(x = reorder(candidate, total_votes), y = total_votes, fill = party)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_manual(values = c("DEM" = "#2E74C0", "REP" = "#CB454A")) +
+  labs(
+    title = "Alabama 2026 US Senate Primary",
+    subtitle = "Total votes cast by candidate and party",
+    x = "Candidate",
+    y = "Total Votes",
+    fill = "Party"
+  ) +
+  theme_minimal()
+```
+
+The chart above displays statewide vote totals for candidates in the 2026 Alabama U.S. Senate primary election across both major political parties.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Find winning candidate/party in each county
+county_winners <- results |>
+  group_by(county, candidate, party) |>
+  summarize(votes = sum(votes, na.rm = TRUE), .groups = "drop") |>
+  slice_max(votes, by = county) |>
+  mutate(
+    subregion = county |>
+      str_remove_all("\\.") |>
+      tolower() |>
+      str_replace("^dekalb$", "de kalb")
+  )
+
+# Join with Alabama county boundaries
+al_map <- map_data("county") |>
+  filter(region == "alabama") |>
+  left_join(county_winners, by = "subregion")
+
+# Plot the county results map
+ggplot(al_map, aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_quickmap() +
+  scale_fill_manual(values = c("DEM" = "#2E74C0", "REP" = "#CB454A")) +
+  labs(
+    title = "Alabama 2026 US Senate Primary Results by County",
+    subtitle = "Top vote-getting party in each county",
+    fill = "Party"
+  ) +
+  theme_void()
+```

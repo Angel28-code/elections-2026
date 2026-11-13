@@ -1,0 +1,66 @@
+---
+title: "Pennsylvania Elections"
+---
+
+This page examines results from the 2026 Pennsylvania primary election using precinct-level data from the Pennsylvania Department of State.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(maps)
+
+# Read the Pennsylvania 2026 Governor results
+results <- read_csv("pennsylvania_governor_2026.csv", show_col_types = FALSE)
+
+# Plot total votes for the Governor race
+results |>
+  group_by(candidate, party) |>
+  summarize(total_votes = sum(votes, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(x = reorder(candidate, total_votes), y = total_votes, fill = party)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_manual(values = c("DEM" = "#2E74C0", "REP" = "#CB454A")) +
+  labs(
+    title = "Pennsylvania 2026 Gubernatorial Primary",
+    subtitle = "Total votes cast by candidate and party",
+    x = "Candidate",
+    y = "Total Votes",
+    fill = "Party"
+  ) +
+  theme_minimal()
+```
+
+The chart above displays statewide vote totals in the 2026 Pennsylvania gubernatorial primary election for each party's nominee.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Find winning candidate/party in each county
+county_winners <- results |>
+  group_by(county, candidate, party) |>
+  summarize(votes = sum(votes, na.rm = TRUE), .groups = "drop") |>
+  slice_max(votes, by = county) |>
+  mutate(subregion = tolower(county))
+
+# Join with Pennsylvania county boundaries
+pa_map <- map_data("county") |>
+  filter(region == "pennsylvania") |>
+  left_join(county_winners, by = "subregion")
+
+# Plot the county results map
+ggplot(pa_map, aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_quickmap() +
+  scale_fill_manual(values = c("DEM" = "#2E74C0", "REP" = "#CB454A")) +
+  labs(
+    title = "Pennsylvania 2026 Gubernatorial Primary Results by County",
+    subtitle = "Top vote-getting party in each county",
+    fill = "Party"
+  ) +
+  theme_void()
+```
