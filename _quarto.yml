@@ -4,6 +4,8 @@ project:
 website:
   title: "Elections"
   navbar:
+    background: "#1b365d"
+    foreground: "#ffffff"
     left:
       - href: index.qmd
         text: Home
@@ -13,6 +15,8 @@ website:
         text: Alabama
       - href: pennsylvania.qmd
         text: Pennsylvania
+      - href: minnesota.qmd
+        text: Minnesota
       - about.qmd
 
 format:
@@ -22,6 +26,7 @@ format:
       - brand
     css: styles.css
     toc: true
+    smooth-scroll: true
 
 
 
